@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { Home } from './home/home';
 import { ProduseComponent } from './produse/produse'; 
-
+import { authGuard } from './auth.guard';
 import { DespreComponent } from './despre/despre';
 import { Contact } from './contact/contact';
 import { AdminComponent } from './admin/admin';
@@ -11,15 +11,15 @@ import { ProdusDetaliuComponent } from './produs-detaliu/produs-detaliu';
 
 export const routes: Routes = [
   { path: '', component: Home },
-  
-  // 3. AICI TREBUIE SA FIE COMPONENTA:
   { path: 'produse', component: ProduseComponent },
-  
   { path: 'despre', component: DespreComponent },
   { path: 'cariere', component: CariereComponent }, 
-  { path: 'contact', component: Contact},
-  { path: 'admin', component: AdminComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'contact', component: Contact },
   { path: 'produs/:id', component: ProdusDetaliuComponent },
+  
+  // Rute protejate
+  { path: 'admin', component: AdminComponent, canActivate: [authGuard] },
+  { path: 'login', component: LoginComponent },
+  
   { path: '**', redirectTo: '' }
 ];

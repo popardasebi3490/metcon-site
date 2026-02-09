@@ -7,7 +7,6 @@
       </div>
       
       <div class="card-body p-4">
-        
         <form (ngSubmit)="incearcaLogin()">
           
           <div class="mb-3">
@@ -22,7 +21,10 @@
             <label class="form-label fw-bold small text-muted">Parolă</label>
             <div class="input-group">
               <span class="input-group-text bg-light"><i class="bi bi-lock"></i></span>
-              <input type="password" [(ngModel)]="pass" name="pass" class="form-control" placeholder="******" required>
+              <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="pass" name="pass" class="form-control" placeholder="******" required>
+              <button class="btn btn-outline-secondary" type="button" (click)="togglePassword()">
+                <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+              </button>
             </div>
           </div>
 
@@ -37,7 +39,6 @@
           </div>
 
         </form>
-
       </div>
       <div class="card-footer bg-light text-center py-2">
         <small class="text-muted">Acces restricționat personalului Metcon</small>

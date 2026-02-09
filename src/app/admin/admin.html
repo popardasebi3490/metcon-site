@@ -27,7 +27,12 @@
         </div>
         <div class="col-md-4">
           <label class="small fw-bold">Parolă</label>
-          <input [(ngModel)]="parolaAdminNou" type="text" class="form-control" placeholder="******">
+          <div class="input-group">
+            <input [type]="showPasswordNew ? 'text' : 'password'" [(ngModel)]="parolaAdminNou" class="form-control" placeholder="******">
+            <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordNew()">
+              <i class="bi" [ngClass]="showPasswordNew ? 'bi-eye-slash' : 'bi-eye'"></i>
+            </button>
+          </div>
         </div>
         <div class="col-md-4">
           <button (click)="adaugaAdminNou()" class="btn btn-dark w-100">

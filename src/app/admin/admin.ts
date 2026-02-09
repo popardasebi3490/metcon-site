@@ -14,23 +14,19 @@ import { ProduseService, Produs, Categorie } from '../produse.service';
   styleUrls: ['./admin.css']
 })
 export class AdminComponent implements OnInit {
-  
-  // --- DATE PRODUSE ---
   produsNou: any = { nume: '', descriere: '', pret: null, imagine: '', categorie: '' };
   numeCategorieNoua: string = ''; 
   produse: Produs[] = [];
   categorii: Categorie[] = []; 
   loading: boolean = true;
-
-  // --- FILTRARE & SEARCH ---
   searchTerm: string = '';
   filtruCategorie: string = '';
 
-  // --- DATE MANAGER ---
   isManager: boolean = false;
   listaUseri: User[] = [];
   numeAdminNou: string = '';
   parolaAdminNou: string = '';
+  showPasswordNew = false; // Adăugat pentru ochiul de la crearea de user
 
   constructor(
     public auth: AuthService,
@@ -49,8 +45,11 @@ export class AdminComponent implements OnInit {
         }
       }
     });
-    
     this.incarcaProduseSiCategorii();
+  }
+
+  togglePasswordNew() {
+    this.showPasswordNew = !this.showPasswordNew;
   }
 
   get produseFiltrate() {
@@ -119,34 +118,26 @@ export class AdminComponent implements OnInit {
   }
 
   async adaugaProdus() {
-    // 1. Validare
     if (!this.produsNou.nume || !this.produsNou.categorie) {
       alert('Te rog completează Numele și Categoria!');
       return;
     }
-
-    // 2. Pregatire date (Price convertit la numar)
     const produsDeTrimis: any = {
       nume: this.produsNou.nume,
       categorie: this.produsNou.categorie,
-      // Daca e gol, punem null. Daca are valoare, o facem numar (nu text)
       pret: this.produsNou.pret ? Number(this.produsNou.pret) : null,
       imagine: this.produsNou.imagine || 'https://placehold.co/600x400?text=Fara+Poza',
       descriere: this.produsNou.descriere || ''
     };
-
     try {
       await this.service.adaugaProdus(produsDeTrimis);
-      
-      // Resetare
       this.produsNou = { nume: '', descriere: '', pret: null, imagine: '', categorie: '' };
       const fileInput = document.getElementById('fileInput') as HTMLInputElement;
       if(fileInput) fileInput.value = '';
-      
       alert('Produs adăugat cu succes!');
     } catch (err) {
       console.error(err);
-      alert('Eroare la adăugare! (Verifică consola F12)');
+      alert('Eroare la adăugare!');
     }
   }
 
@@ -167,19 +158,16 @@ export class AdminComponent implements OnInit {
   async stergeCategorie(id: string | undefined, nume: string) {
     if (!id) return;
     const nrProduse = await this.service.verificaProduseInCategorie(nume);
-    
     let mesaj = `Sigur ștergi categoria "${nume}"?`;
     if (nrProduse > 0) {
-      mesaj += `\n\nATENȚIE: Această categorie este folosită de ${nrProduse} produse!\nDacă continui, produsele vor rămâne "Neclasificate".`;
+      mesaj += `\n\nATENȚIE: Această categorie este folosită de ${nrProduse} produse!`;
     }
-
     if (confirm(mesaj)) {
       try {
         await this.service.stergeCategorieCuVerificare(id);
         alert("Categoria a fost ștearsă.");
       } catch (e) {
-        console.error(e);
-        alert('A apărut o eroare la ștergerea categoriei.');
+        alert('Eroare la ștergerea categoriei.');
       }
     }
   }

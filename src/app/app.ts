@@ -1,7 +1,7 @@
-import { Component } from '@angular/core'; 
+import { Component, inject } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
-// Am scos ThemeService
+import { AuthService } from './auth'; 
 
 @Component({
   selector: 'app-root',
@@ -12,4 +12,6 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'metcon-site';
+
+  public auth = inject(AuthService); 
 }

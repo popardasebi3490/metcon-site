@@ -1,0 +1,47 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="col-md-4 col-sm-8 col-12">
+    <div class="card shadow-lg border-0 rounded-3">
+      
+      <div class="card-header bg-primary text-white text-center py-3">
+        <h4 class="mb-0 fw-bold">Autentificare Staff</h4>
+      </div>
+      
+      <div class="card-body p-4">
+        
+        <form (ngSubmit)="incearcaLogin()">
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold small text-muted">Utilizator</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
+              <input type="text" [(ngModel)]="user" name="user" class="form-control" placeholder="ex: manager" required>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-bold small text-muted">Parolă</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light"><i class="bi bi-lock"></i></span>
+              <input type="password" [(ngModel)]="pass" name="pass" class="form-control" placeholder="******" required>
+            </div>
+          </div>
+
+          <button type="submit" [disabled]="loading" class="btn btn-primary w-100 fw-bold py-2 shadow-sm">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            {{ loading ? 'Se verifică...' : 'Intră în cont' }}
+          </button>
+        
+          <div *ngIf="eroare" class="alert alert-danger mt-3 text-center small fw-bold d-flex align-items-center justify-content-center">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <div>Utilizator sau parolă greșită!</div>
+          </div>
+
+        </form>
+
+      </div>
+      <div class="card-footer bg-light text-center py-2">
+        <small class="text-muted">Acces restricționat personalului Metcon</small>
+      </div>
+    </div>
+  </div>
+</div>

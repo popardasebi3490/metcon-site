@@ -1,12 +1,15 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core'; 
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { CommonModule } from '@angular/common';
+// Am scos ThemeService
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive], 
+  templateUrl: './app.html', 
+  styleUrl: './app.css'    
 })
-export class App {
-  protected readonly title = signal('metcon-site');
+export class AppComponent {
+  title = 'metcon-site';
 }

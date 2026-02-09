@@ -1,0 +1,179 @@
+<div class="container py-4 transitions-enabled">
+  
+  <div class="d-flex justify-content-between align-items-center mb-5 pb-3 border-bottom flex-wrap gap-3">
+    <h2 class="text-primary fw-bold mb-0">
+      <i class="bi bi-shield-lock-fill"></i> Panou Admin
+    </h2>
+    
+    <div class="d-flex gap-2 align-items-center">
+      <span class="badge bg-dark me-2 d-none d-md-inline-block" *ngIf="auth.user$ | async as u">
+        {{ u.username }} ({{ u.role }})
+      </span>
+      <button class="btn btn-danger btn-sm" (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i> <span class="d-none d-md-inline">Logout</span>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isManager" class="card mb-5 border-warning shadow-sm">
+    <div class="card-header bg-warning text-dark fw-bold">
+      <i class="bi bi-person-badge-fill"></i> Staff (Doar Manager)
+    </div>
+    <div class="card-body">
+      <div class="row g-2 mb-3 align-items-end">
+        <div class="col-md-4">
+          <label class="small fw-bold">User Nou</label>
+          <input [(ngModel)]="numeAdminNou" type="text" class="form-control" placeholder="Utilizator">
+        </div>
+        <div class="col-md-4">
+          <label class="small fw-bold">Parolă</label>
+          <input [(ngModel)]="parolaAdminNou" type="text" class="form-control" placeholder="******">
+        </div>
+        <div class="col-md-4">
+          <button (click)="adaugaAdminNou()" class="btn btn-dark w-100">
+            <i class="bi bi-person-plus"></i> Creează
+          </button>
+        </div>
+      </div>
+      <ul class="list-group">
+        <li *ngFor="let u of listaUseri" class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <span class="fw-bold">{{ u.username }}</span> 
+            <span class="badge ms-1" [ngClass]="u.role === 'manager' ? 'bg-danger' : 'bg-secondary'">{{ u.role }}</span>
+          </div>
+          <button *ngIf="u.role !== 'manager'" (click)="stergeUser(u.id, u.role)" class="btn btn-sm btn-outline-danger">
+            <i class="bi bi-trash"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="card shadow-sm h-100 border-0 bg-light"> 
+        <div class="card-header bg-primary text-white fw-bold">
+          ➕ Adaugă Produs
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold small">Nume *</label>
+                <input type="text" class="form-control" [(ngModel)]="produsNou.nume" name="nume" placeholder="ex: Ciment">
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold small">Categorie *</label>
+                <select class="form-select" [(ngModel)]="produsNou.categorie" name="categorie">
+                  <option value="" disabled selected>Alege...</option>
+                  <option *ngFor="let c of categorii" [value]="c.nume">{{ c.nume }}</option>
+                  <option value="Neclasificat">Neclasificat</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold small">Preț (RON)</label>
+              <input type="number" class="form-control" [(ngModel)]="produsNou.pret" name="pret" placeholder="Opțional">
+            </div>
+
+            <div class="mb-3 p-3 border rounded bg-white">
+              <label class="form-label fw-bold small">Imagine</label>
+              <input type="file" id="fileInput" class="form-control mb-2" (change)="onFileSelected($event)" accept="image/*">
+              <div *ngIf="produsNou.imagine" class="text-center">
+                <img [src]="produsNou.imagine" style="max-height: 80px; border-radius: 5px;">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold small">Descriere</label>
+              <textarea class="form-control" rows="2" [(ngModel)]="produsNou.descriere" name="descriere"></textarea>
+            </div>
+
+            <button type="button" (click)="adaugaProdus()" class="btn btn-primary w-100 fw-bold shadow-sm">
+              Salvează Produs
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="card shadow-sm h-100 border-0">
+        <div class="card-header bg-secondary text-white fw-bold">
+          📂 Categorii
+        </div>
+        <div class="card-body">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" [(ngModel)]="numeCategorieNoua" placeholder="Categorie nouă...">
+            <button class="btn btn-dark" type="button" (click)="adaugaCategorie()">+</button>
+          </div>
+
+          <div class="d-flex flex-wrap gap-2">
+            <div *ngFor="let cat of categorii" class="badge bg-light text-dark border p-2 d-flex align-items-center">
+              <span class="fs-6 me-2">{{ cat.nume }}</span>
+              <button class="btn btn-sm btn-danger p-0 px-1 rounded-circle" (click)="stergeCategorie(cat.id, cat.nume)">
+                <i class="bi bi-x"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mt-4 shadow-sm border-0">
+    <div class="card-header bg-white border-bottom p-3">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+        <div class="fw-bold">📋 Produse ({{ produseFiltrate.length }})</div>
+        
+        <div class="d-flex gap-2 w-100 w-md-auto">
+          <input type="text" class="form-control form-control-sm" placeholder="🔍 Caută..." [(ngModel)]="searchTerm">
+          <select class="form-select form-select-sm" [(ngModel)]="filtruCategorie" style="max-width: 150px;">
+            <option value="">Toate</option>
+            <option *ngFor="let c of categorii" [value]="c.nume">{{ c.nume }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th width="60">Img</th>
+            <th>Detalii</th>
+            <th>Preț</th>
+            <th class="text-end" style="min-width: 120px;">Acțiuni</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of produseFiltrate">
+            <td><img [src]="p.imagine" class="rounded border" style="width: 40px; height: 40px; object-fit: cover;"></td>
+            <td>
+              <div class="fw-bold text-truncate" style="max-width: 150px;">{{ p.nume }}</div>
+              <span class="badge bg-info text-dark" style="font-size: 0.7rem;">
+                {{ p.categorie || 'Neclasificat' }}
+              </span>
+            </td>
+            <td>
+              <span *ngIf="p.pret" class="fw-bold text-success">{{ p.pret }} RON</span>
+              <span *ngIf="!p.pret" class="badge bg-secondary">Info</span>
+            </td>
+            
+            <td class="text-end">
+              <a [routerLink]="['/produs', p.id]" class="btn btn-sm btn-warning me-2 text-dark" title="Editează">
+                <i class="bi bi-pencil-square"></i>
+              </a>
+
+              <button class="btn btn-sm btn-outline-danger border-0" (click)="stergeProdus(p.id)" title="Șterge">
+                <i class="bi bi-trash-fill"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

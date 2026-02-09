@@ -1,1 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
+/* 1. IMPORT FONT (Montserrat - aspect modern) */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap');
+
+/* 2. SETĂRI GLOBALE */
+:root {
+  --metcon-blue: #0d2c54; /* Albastru inchis (Serios) */
+  --metcon-orange: #f39c12; /* Portocaliu (Constructii) */
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f8f9fa; /* Gri foarte deschis pentru fundal */
+  color: #333;
+}
+
+/* 3. STILIZARE MENIU (Link-uri) */
+.nav-link {
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #444 !important; /* Gri inchis pentru text */
+  transition: color 0.3s ease;
+  padding: 10px 15px !important;
+}
+
+.nav-link:hover {
+  color: #0d6efd !important; /* Albastru aprins la mouse over */
+}
+
+/* Cand esti pe o pagina, linkul devine albastru si are o linie sub el */
+.active-link-blue {
+  color: #0d6efd !important;
+  position: relative;
+}
+
+.active-link-blue::after {
+  content: '';
+  position: absolute;
+  bottom: 5px; /* Pozitia liniei */
+  left: 15px; /* Aliniere cu padding-ul */
+  width: calc(100% - 30px); /* Lungimea liniei */
+  height: 3px;
+  background-color: #0d6efd;
+  border-radius: 10px;
+}
+
+/* 4. Alte ajustări */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Facem cardurile produselor să se ridice puțin (efect modern) */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important;
+}

@@ -1,0 +1,85 @@
+/* admin.css */
+
+/* VARIABILE DEFAULT (LIGHT) */
+:root {
+    --bg-color: #f8f9fa;
+    --text-color: #212529;
+    --card-bg: #ffffff;
+    --input-bg: #ffffff;
+    --input-border: #ced4da;
+    --header-border: #dee2e6;
+    --table-hover: #f2f2f2;
+}
+
+/* DARK MODE OVERRIDES */
+body.dark-theme {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --card-bg: #1e1e1e;
+    --input-bg: #2c2c2c;
+    --input-border: #444;
+    --header-border: #333;
+    --table-hover: #2a2a2a;
+}
+
+/* APLICARE VARIABILE */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-color: var(--header-border);
+}
+
+.card-header {
+    border-bottom-color: var(--header-border);
+}
+
+.form-control, .form-select {
+    background-color: var(--input-bg);
+    border-color: var(--input-border);
+    color: var(--text-color);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
+
+.list-group-item {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--header-border);
+}
+
+/* TABEL */
+.table {
+    color: var(--text-color);
+}
+.table-light {
+    background-color: var(--input-bg); /* Putin mai inchis decat cardul */
+    color: var(--text-color);
+}
+.table-hover tbody tr:hover {
+    background-color: var(--table-hover);
+    color: var(--text-color);
+}
+
+/* Imagine upload area in dark mode */
+body.dark-theme .img-upload-area {
+    background-color: #2c2c2c !important;
+    border-color: #444 !important;
+}
+
+body.dark-theme .table-light th {
+    background-color: #333;
+    color: #fff;
+    border-color: #444;
+}
+
+body.dark-theme td {
+    border-color: #333;
+}

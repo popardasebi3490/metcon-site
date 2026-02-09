@@ -1,0 +1,105 @@
+<div class="container py-5">
+  
+  <nav aria-label="breadcrumb" class="mb-4 d-flex justify-content-between align-items-center bg-light p-3 rounded">
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item"><a routerLink="/" class="text-decoration-none text-muted">Acasă</a></li>
+      <li class="breadcrumb-item"><a routerLink="/produse" class="text-decoration-none text-muted">Catalog</a></li>
+      <li class="breadcrumb-item active" aria-current="page" *ngIf="produs">{{ produs.nume }}</li>
+    </ol>
+
+    <button *ngIf="auth.user$ | async" (click)="activeazaEditarea()" class="btn btn-warning btn-sm fw-bold shadow-sm">
+      <i class="bi bi-pencil-square"></i> Editează Produs
+    </button>
+  </nav>
+
+  <div *ngIf="editMode" class="card p-4 mb-5 border-warning bg-white shadow" style="border-left: 5px solid #ffc107;">
+    <h4 class="mb-4 text-warning fw-bold">🛠️ Modificare Produs</h4>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Nume Produs</label>
+            <input type="text" [(ngModel)]="produsEditat.nume" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Preț (RON)</label>
+            <input type="number" [(ngModel)]="produsEditat.pret" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Categorie</label>
+            <input type="text" [(ngModel)]="produsEditat.categorie" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Link Imagine (URL)</label>
+            <input type="text" [(ngModel)]="produsEditat.imagine" class="form-control">
+        </div>
+        <div class="col-12">
+            <label class="form-label fw-bold">Descriere</label>
+            <textarea [(ngModel)]="produsEditat.descriere" rows="5" class="form-control"></textarea>
+        </div>
+        <div class="col-12 d-flex gap-2 mt-3">
+            <button (click)="salveazaModificari()" class="btn btn-success fw-bold px-4">💾 Salvează</button>
+            <button (click)="anuleazaEditarea()" class="btn btn-secondary px-4">Anulează</button>
+        </div>
+    </div>
+  </div>
+
+  <div *ngIf="produs; else nuExista" class="row gx-5">
+    
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm border-0 p-3 bg-white text-center">
+        <img [src]="produs.imagine" class="img-fluid rounded" 
+             style="max-height: 500px; width: auto; object-fit: contain;">
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <span class="badge bg-secondary mb-2 text-uppercase px-3 py-2">{{ produs.categorie }}</span>
+      <h1 class="fw-bold mb-3 text-body display-6">{{ produs.nume }}</h1> 
+      
+      <div class="mb-4">
+        <h2 *ngIf="produs.pret" class="text-primary fw-bold">
+          {{ produs.pret }} RON <span class="fs-6 text-muted fw-normal">/ bucată (TVA inclus)</span>
+        </h2>
+        <h2 *ngIf="!produs.pret" class="text-warning fw-bold">Preț la cerere</h2>
+      </div>
+
+      <div class="mb-4">
+        <h5 class="fw-bold border-bottom pb-2">Descriere Produs</h5>
+        <p class="text-muted" style="white-space: pre-wrap; line-height: 1.6;">{{ produs.descriere || 'Acest produs este disponibil în depozitul nostru. Pentru detalii tehnice suplimentare, vă rugăm să ne contactați.' }}</p>
+      </div>
+
+      <div class="card bg-light border-primary mb-4">
+        <div class="card-body">
+          <h5 class="card-title fw-bold text-primary mb-3">
+            <i class="bi bi-info-circle-fill me-2"></i>Ai nevoie de acest produs?
+          </h5>
+          <p class="small text-muted mb-3">
+            Verifică stocul actual sau cere o ofertă personalizată.
+          </p>
+          
+          <div class="d-grid gap-2 d-md-flex">
+            <a href="tel:0237641682" class="btn btn-success fw-bold px-4 py-2">
+              <i class="bi bi-telephone-fill me-2"></i> SUNĂ ACUM
+            </a>
+            <a routerLink="/contact" class="btn btn-primary fw-bold px-4 py-2">
+              <i class="bi bi-envelope-fill me-2"></i> CERE OFERTĂ
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <ul class="list-unstyled text-secondary small">
+        <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Disponibil în depozitul Adjud</li>
+        <li class="mb-2"><i class="bi bi-truck text-body me-2"></i>Posibilitate transport la șantier</li>
+        <li class="mb-2"><i class="bi bi-shield-check text-body me-2"></i>Consultanță gratuită</li>
+      </ul>
+
+    </div>
+  </div>
+
+  <ng-template #nuExista>
+    <div class="alert alert-warning text-center my-5 p-5">
+      <h4>Produsul nu a fost găsit sau se încarcă...</h4>
+      <a routerLink="/produse" class="btn btn-outline-dark mt-3">Înapoi la Catalog</a>
+    </div>
+  </ng-template>
+</div>

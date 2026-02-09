@@ -46,7 +46,7 @@
         <a class="nav-link mx-2" routerLink="/cariere" routerLinkActive="active-link-blue">Cariere</a>
         <a class="nav-link mx-2" routerLink="/contact" routerLinkActive="active-link-blue">Contact</a>
         
-        <a class="btn btn-warning ms-lg-3 px-4 rounded-pill fw-bold text-white shadow-sm mt-3 mt-lg-0" routerLink="/admin">
+        <a *ngIf="auth.user$ | async" class="btn btn-warning ms-lg-3 px-4 rounded-pill fw-bold text-white shadow-sm mt-3 mt-lg-0" routerLink="/admin">
           STAFF <i class="bi bi-shield-lock-fill ms-1"></i>
         </a>
       </div>

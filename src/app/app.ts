@@ -14,4 +14,6 @@ export class AppComponent {
   title = 'metcon-site';
 
   public auth = inject(AuthService); 
+
+  isMenuCollapsed = true;
 }

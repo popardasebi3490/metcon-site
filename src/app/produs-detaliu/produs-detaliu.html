@@ -33,7 +33,7 @@
         </div>
         <div class="col-12">
             <label class="form-label fw-bold">Descriere</label>
-            <textarea [(ngModel)]="produsEditat.descriere" rows="5" class="form-control"></textarea>
+            <textarea [(ngModel)]="produsEditat.descriere" rows="5" class="form-control" placeholder="Introdu descrierea aici..."></textarea>
         </div>
         <div class="col-12 d-flex gap-2 mt-3">
             <button (click)="salveazaModificari()" class="btn btn-success fw-bold px-4">💾 Salvează</button>
@@ -56,10 +56,10 @@
       <h1 class="fw-bold mb-3 text-body display-6">{{ produs.nume }}</h1> 
       
       <div class="mb-4">
-        <h2 *ngIf="produs.pret" class="text-primary fw-bold">
+        <h2 *ngIf="produs.pret && produs.pret > 0" class="text-primary fw-bold">
           {{ produs.pret }} RON <span class="fs-6 text-muted fw-normal">/ bucată (TVA inclus)</span>
         </h2>
-        <h2 *ngIf="!produs.pret" class="text-warning fw-bold">Preț la cerere</h2>
+        <h2 *ngIf="!produs.pret || produs.pret <= 0" class="text-warning fw-bold">Preț la cerere</h2>
       </div>
 
       <div class="mb-4">

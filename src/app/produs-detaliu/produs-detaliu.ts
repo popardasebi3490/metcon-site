@@ -3,10 +3,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { Observable } from 'rxjs';
+import { Title, Meta } from '@angular/platform-browser'; // <--- Importuri SEO
 
 // IMPORTURILE NOASTRE
 import { ProduseService, Produs } from '../produse.service';
-import { AuthService } from '../auth'; // <--- Folosim serviciul tau custom
+import { AuthService } from '../auth'; 
 
 @Component({
   selector: 'app-produs-detaliu',
@@ -20,11 +21,15 @@ export class ProdusDetaliuComponent implements OnInit {
   produsEditat: Produs = {} as Produs;
   loading: boolean = true;
   editMode: boolean = false;
-
+  
   // Injectam serviciile
   private route = inject(ActivatedRoute);
   private service = inject(ProduseService);
-  public auth = inject(AuthService); // <--- Public ca sa il vedem in HTML
+  public auth = inject(AuthService); 
+  
+  // Servicii pentru SEO (Titlu Browser + Meta Description)
+  private titleService = inject(Title);
+  private metaService = inject(Meta);
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -37,8 +42,21 @@ export class ProdusDetaliuComponent implements OnInit {
     this.service.getProdusById(id).subscribe((data) => {
       this.produs = data;
       this.loading = false;
-      // Facem o copie pentru editare
-      if(data) this.produsEditat = { ...data };
+      
+      if (data) {
+        // 1. Pregatim datele pentru editare
+        this.produsEditat = { ...data };
+
+        // 2. SEO: Schimbam Titlul Tab-ului (ex: "Ciment | Metcon")
+        this.titleService.setTitle(`${data.nume} | Metcon Adjud`);
+
+        // 3. SEO: Schimbam Descrierea pentru Google
+        const descriereScurta = data.descriere 
+          ? data.descriere.substring(0, 150) // Luam primele 150 caractere
+          : `Cumpără ${data.nume} de la Metcon Adjud. Materiale de construcții de calitate.`;
+
+        this.metaService.updateTag({ name: 'description', content: descriereScurta });
+      }
     });
   }
 
@@ -56,7 +74,7 @@ export class ProdusDetaliuComponent implements OnInit {
   async salveazaModificari() {
     if (this.produsEditat && this.produs?.id) {
       try {
-        // Trimitem doar datele, fara ID (ID-ul e in URL)
+        // Trimitem doar datele, fara ID (ID-ul e deja in URL)
         const { id, ...dateDeSalvat } = this.produsEditat;
         
         await this.service.updateProdus(this.produs.id, dateDeSalvat);

@@ -43,7 +43,7 @@
            (click)="isMenuCollapsed = true">Despre Noi</a>
 
         <a class="nav-link mx-2" routerLink="/seap" routerLinkActive="active-link-blue" 
-           (click)="isMenuCollapsed = true">SEAP/SICAP</a>   
+           (click)="isMenuCollapsed = true">SEAP / SICAP</a> 
            
         <a class="nav-link mx-2" routerLink="/cariere" routerLinkActive="active-link-blue" 
            (click)="isMenuCollapsed = true">Cariere</a>
@@ -66,27 +66,43 @@
 
 <footer class="bg-dark text-white pt-5 pb-3 mt-5 border-top border-4 border-warning">
   <div class="container">
-    <div class="row">
-      <div class="col-md-4 mb-4">
+    <div class="row text-center justify-content-center">
+      
+      <div class="col-md-6 col-lg-3 mb-4">
         <h5 class="text-uppercase fw-bold text-warning mb-3">Metcon SRL</h5>
-        <p class="text-secondary small">Materiale de construcții și consultanță în Adjud.</p>
+        <p class="text-secondary small">Materiale de construcții și consultanță profesionistă în Adjud.</p>
+        <div class="text-secondary small">&copy; 2026 Metcon SRL.</div>
       </div>
-      <div class="col-md-4 mb-4">
-        <h5 class="text-uppercase fw-bold text-warning mb-3">Link-uri</h5>
+      
+      <div class="col-md-6 col-lg-3 mb-4">
+        <h5 class="text-uppercase fw-bold text-warning mb-3">Navigare</h5>
         <ul class="list-unstyled">
-          <li><a routerLink="/produse" class="text-decoration-none text-light opacity-75">Catalog</a></li>
-          <li><a routerLink="/seap" class="text-decoration-none text-light opacity-75">Achiziții SEAP</a></li>
-          <li><a routerLink="/contact" class="text-decoration-none text-light opacity-75">Contact</a></li>
+          <li class="mb-2"><a routerLink="/produse" class="text-decoration-none text-light opacity-75">Catalog Online</a></li>
+          <li class="mb-2"><a routerLink="/seap" class="text-decoration-none text-light opacity-75">Achiziții SEAP</a></li>
+          <li class="mb-2"><a routerLink="/contact" class="text-decoration-none text-light opacity-75">Contact Rapid</a></li>
         </ul>
       </div>
-      <div class="col-md-4 mb-4">
-        <h5 class="text-uppercase fw-bold text-warning mb-3">Contact</h5>
+      
+      <div class="col-md-6 col-lg-3 mb-4">
+        <h5 class="text-uppercase fw-bold text-warning mb-3">Date Contact</h5>
         <p class="text-light opacity-75 mb-2"><i class="bi bi-geo-alt-fill me-2 text-warning"></i>Str. Nicolae Bălcescu 4, Adjud</p>
         <p class="text-light opacity-75 mb-2"><i class="bi bi-telephone-fill me-2 text-warning"></i>0237 641 682</p>
         <p class="text-light opacity-75 mb-2"><i class="bi bi-envelope-fill me-2 text-warning"></i>metconadjud&#64;yahoo.com</p>
       </div>
+
+      <div class="col-md-6 col-lg-3 d-none d-lg-block mb-4">
+        <h5 class="text-uppercase fw-bold text-warning mb-3">Catalog Digital</h5>
+        
+        <div class="bg-white p-2 d-inline-block rounded shadow-sm">
+          <img src="assets/qr-code.png" alt="QR Code" style="width: 100px; height: 100px;">
+        </div>
+        
+        <p class="text-secondary small mt-2">
+          Ia catalogul cu tine pe șantier.<br>
+          <span class="text-white opacity-50">Scanează cu telefonul.</span>
+        </p>
+      </div>
+
     </div>
-    <hr class="border-secondary my-4">
-    <div class="text-center text-secondary small">&copy; 2026 Metcon SRL.</div>
   </div>
 </footer>

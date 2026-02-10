@@ -1,22 +1,39 @@
-/* Stil pentru link-ul paginii curente */
+/* --- STILURI NAVBAR --- */
+
+/* 1. Link-ul paginii curente (ACTIV) */
 .active-link-blue {
-  color: #0d6efd !important; /* Albastru primar Bootstrap */
-  font-weight: bold;
-  border-bottom: 2px solid #0d6efd;
+  color: #0d6efd !important;
+  font-weight: 700 !important;
+  /* Bara albastră vizibilă */
+  border-bottom: 3px solid #0d6efd !important; 
 }
 
-/* Efecte la hover pe link-uri */
+/* 2. Stil general pentru link-uri (NORMAL) */
 .nav-link {
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #444 !important;
   transition: all 0.3s ease;
-  position: relative;
-  font-weight: 500;
+  
+  /* Spațiere ca să arate bine */
+  padding: 10px 15px !important; 
+  padding-bottom: 8px !important; /* Dă aer barei de jos */
+  
+  /* Bordură invizibilă (transparentă) ca să ocupe locul */
+  border-bottom: 3px solid transparent !important; 
 }
 
+/* 3. Hover (Când pui mouse-ul peste) */
 .nav-link:hover {
   color: #0d6efd !important;
+  /* ACUM APAR BARA ȘI LA HOVER */
+  border-bottom: 3px solid #0d6efd !important; 
 }
 
-/* FIX PENTRU MOBIL: Asigură-te că meniul e deasupra tuturor elementelor */
+/* --- FIX PENTRU MOBIL --- */
+
 .navbar {
   z-index: 1050 !important;
 }
@@ -26,21 +43,28 @@
   outline: none !important;
 }
 
-/* Stil pentru butonul hamburger când e apăsat */
 .navbar-toggler:focus {
   box-shadow: none !important;
 }
 
-/* Spațiere pentru ecrane mici */
+/* Comportament specific pe ecrane mici */
 @media (max-width: 991.98px) {
   .navbar-nav {
     padding: 1rem 0;
   }
+  
   .nav-link {
     padding: 0.8rem 0 !important;
-    border-bottom: 1px solid #f8f9fa;
+    border-bottom: 1px solid #f8f9fa !important; /* Linie gri între elemente */
   }
+  
+  /* Pe mobil bara albastră e mai subțire */
   .active-link-blue {
-    border-bottom: 1px solid #0d6efd;
+    border-bottom: 2px solid #0d6efd !important; 
+  }
+  
+  /* Pe mobil scoatem bara la hover ca să nu arate ciudat când dai cu degetul */
+  .nav-link:hover {
+    border-bottom: 1px solid #f8f9fa !important;
   }
 }
